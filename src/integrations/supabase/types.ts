@@ -11,72 +11,126 @@ export type Database = {
     Tables: {
       debate_sessions: {
         Row: {
-          ai_score: number
-          created_at: string | null
-          duration: number
           id: string
-          messages: Json
-          topic: string
           user_id: string
-          user_position: Database["public"]["Enums"]["debate_position"]
-          user_score: number
+          topic_id: string | null
+          position: string
+          duration_seconds: number | null
+          ai_opponent_response: string | null
+          user_score: number | null
+          ai_score: number | null
+          feedback: Json
+          created_at: string | null
         }
         Insert: {
-          ai_score?: number
-          created_at?: string | null
-          duration?: number
           id?: string
-          messages?: Json
-          topic: string
           user_id: string
-          user_position: Database["public"]["Enums"]["debate_position"]
-          user_score?: number
+          topic_id?: string | null
+          position: string
+          duration_seconds?: number | null
+          ai_opponent_response?: string | null
+          user_score?: number | null
+          ai_score?: number | null
+          feedback?: Json
+          created_at?: string | null
         }
         Update: {
-          ai_score?: number
-          created_at?: string | null
-          duration?: number
           id?: string
-          messages?: Json
-          topic?: string
           user_id?: string
-          user_position?: Database["public"]["Enums"]["debate_position"]
-          user_score?: number
+          topic_id?: string | null
+          position?: string
+          duration_seconds?: number | null
+          ai_opponent_response?: string | null
+          user_score?: number | null
+          ai_score?: number | null
+          feedback?: Json
+          created_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "debate_sessions_topic_id_fkey"
+            columns: ["topic_id"]
+            isOneToOne: false
+            referencedRelation: "topics"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "debate_sessions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
-      practice_sessions: {
+      speech_sessions: {
         Row: {
-          analysis: Json
-          audio_url: string | null
-          created_at: string | null
-          duration: number
           id: string
-          topic: string
-          transcript: string | null
           user_id: string
+          topic_id: string | null
+          title: string | null
+          audio_url: string | null
+          transcript: string | null
+          duration_seconds: number | null
+          clarity_score: number | null
+          pace_score: number | null
+          volume_score: number | null
+          tone_score: number | null
+          engagement_score: number | null
+          overall_score: number | null
+          feedback: Json
+          created_at: string | null
         }
         Insert: {
-          analysis?: Json
-          audio_url?: string | null
-          created_at?: string | null
-          duration?: number
           id?: string
-          topic: string
-          transcript?: string | null
           user_id: string
+          topic_id?: string | null
+          title?: string | null
+          audio_url?: string | null
+          transcript?: string | null
+          duration_seconds?: number | null
+          clarity_score?: number | null
+          pace_score?: number | null
+          volume_score?: number | null
+          tone_score?: number | null
+          engagement_score?: number | null
+          overall_score?: number | null
+          feedback?: Json
+          created_at?: string | null
         }
         Update: {
-          analysis?: Json
-          audio_url?: string | null
-          created_at?: string | null
-          duration?: number
           id?: string
-          topic?: string
-          transcript?: string | null
           user_id?: string
+          topic_id?: string | null
+          title?: string | null
+          audio_url?: string | null
+          transcript?: string | null
+          duration_seconds?: number | null
+          clarity_score?: number | null
+          pace_score?: number | null
+          volume_score?: number | null
+          tone_score?: number | null
+          engagement_score?: number | null
+          overall_score?: number | null
+          feedback?: Json
+          created_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "speech_sessions_topic_id_fkey"
+            columns: ["topic_id"]
+            isOneToOne: false
+            referencedRelation: "topics"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "speech_sessions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       team_members: {
         Row: {
@@ -113,7 +167,7 @@ export type Database = {
       teams: {
         Row: {
           created_at: string | null
-          created_by: string
+          leader_id: string
           description: string
           id: string
           name: string
@@ -121,7 +175,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string | null
-          created_by: string
+          leader_id: string
           description?: string
           id?: string
           name: string
@@ -129,7 +183,7 @@ export type Database = {
         }
         Update: {
           created_at?: string | null
-          created_by?: string
+          leader_id?: string
           description?: string
           id?: string
           name?: string
@@ -137,35 +191,49 @@ export type Database = {
         }
         Relationships: []
       }
-      users: {
+      profiles: {
         Row: {
-          avatar_url: string | null
-          created_at: string | null
-          email: string
           id: string
-          name: string
-          role: Database["public"]["Enums"]["user_role"]
+          email: string
+          full_name: string | null
+          bio: string | null
+          avatar_url: string | null
+          goals: string | null
+          preferences: Json
+          created_at: string | null
           updated_at: string | null
         }
         Insert: {
-          avatar_url?: string | null
-          created_at?: string | null
-          email: string
           id: string
-          name: string
-          role?: Database["public"]["Enums"]["user_role"]
+          email: string
+          full_name?: string | null
+          bio?: string | null
+          avatar_url?: string | null
+          goals?: string | null
+          preferences?: Json
+          created_at?: string | null
           updated_at?: string | null
         }
         Update: {
-          avatar_url?: string | null
-          created_at?: string | null
-          email?: string
           id?: string
-          name?: string
-          role?: Database["public"]["Enums"]["user_role"]
+          email?: string
+          full_name?: string | null
+          bio?: string | null
+          avatar_url?: string | null
+          goals?: string | null
+          preferences?: Json
+          created_at?: string | null
           updated_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: {
